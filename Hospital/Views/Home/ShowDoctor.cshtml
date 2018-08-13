@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "ShowDoctor";
+}
+
+
+@if (ViewBag.Doctor != null)
+{
+    <h3>Врач: @ViewBag.Doctor.LastName @ViewBag.Doctor.FirstName @ViewBag.Doctor.MiddleName  </h3>
+    <h3>Отделение: @ViewBag.Department</h3>
+
+    <form method="post" action="/Home/Reservation">
+
+        <select name="VisitID">
+            @foreach (var v in ViewBag.Visits)
+            {
+                <option value="@v.ID">@v.VisitTime.ToString("dd.MM HH:mm")</option>
+            }
+        </select>
+
+        <br />
+        <br />
+
+        <input type="submit" value="Записать на прием" />
+
+    </form>
+}
+

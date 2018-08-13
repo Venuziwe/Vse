@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h3>Записаться на прием</h3>
+
+<div ng-controller="AJAXController">
+    <form>
+        <select name="DepartmentID" ng-model="DepartmentID" ng-change="getDoctors()" ng-init="getDoctors()" class="form-group myselect">
+
+            <option value="0">Выберите отделение</option>
+
+            @foreach (var n in ViewBag.Departments)
+            {
+                <option value="@n.ID" class="myselect">@n.Name</option>
+            }
+        </select>
+        <h3>Нажмите на врача</h3>
+        <div ng-repeat="doctor in doctors">
+            <a href="/Home/ShowDoctor?DoctorID={{doctor.ID}}">{{doctor.LastName}} {{doctor.FirstName}} {{doctor.MiddleName}}</a>
+        </div>
+
+        <h3>Либо введите полностью ФИО Врача для поиска</h3>
+        <input placeholder="Фамилия" type="text" name="LastName" ng-model="LastName" />
+        <br />
+        <br />
+        <input placeholder="Имя" type="text" name="FirstName" ng-model="FirstName" />
+        <br />
+        <br />
+        <input placeholder="Отчество" type="text" name="MiddleName" ng-model="MiddleName" />
+        <br />
+        <br />
+        <input type="submit" value="Найти" ng-click="getFIO()" />
+        <br />
+        <a ng-repeat="f in fio" href="/Home/ShowDoctor?DoctorID={{f.ID}}">{{f.LastName}} {{f.FirstName}} {{f.MiddleName}}</a>
+    </form>
+</div>
+
+@if (User.IsInRole("user"))
+{
+    <h1>Ваши записи на прием:</h1>
+    if (ViewBag.visits != null)
+    {
+        foreach (var v in ViewBag.visits)
+        {
+            <p>Доктор: @v.Doctor.LastName @v.Doctor.FirstName @v.Doctor.MiddleName</p>
+            <p>Дата: @v.VisitTime.ToString("dd.MM") Время: @v.VisitTime.ToString("HH:mm")</p>
+        }
+    }
+}

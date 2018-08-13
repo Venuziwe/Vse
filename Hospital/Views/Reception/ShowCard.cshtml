@@ -1,0 +1,20 @@
+﻿@using Hospital.Models;
+@model Card
+@{
+    ViewBag.Title = "ShowCard";
+}
+<h4>Карточка:</h4>
+<h4>@Model.LastName @Model.FirstName @Model.MiddleName</h4>
+<h4>Дата рождения:</h4>
+<h4>@Model.BirthDay</h4>
+
+<form method="post" action="/Reception/ChangeDiseases">
+    <input type="hidden" name="FormCardID" value="@Model.CardID" />
+    @Html.TextArea("FormDiseases", Model.Diseases);
+    <br />
+    <br />
+    <input type="submit" value="Изменить болезни" />
+</form>
+
+
+

@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Reception";
+}
+
+
+<h3>Добавить отделение</h3>
+
+<form method="post" action="/Reception/AddDepartment">
+    <p>Название отделения</p>
+    <input type="text" name="FormDepartmentName" placeholder="Название отделения" />
+    <br />
+    <br />
+    <input type="submit" value="Добавить" />
+</form>
+
+<h3>Добавить врача</h3>
+
+<form method="post" action="/Reception/AddDoctor">
+    <p>Фамилия</p>
+    <input type="text" name="FormLastName" placeholder="Фамилия" />
+    <br />
+    <br />
+    <p>Имя</p>
+    <input type="text" name="FormFirstName" placeholder="Имя" />
+    <br />
+    <br />
+    <p>Отчество</p>
+    <input type="text" name="FormMiddleName" placeholder="Отчество" />
+    <br />
+    <br />
+    <input type="submit" value="Добавить" />
+</form>
+
+<h3>Прикрепить врача к отделению</h3>
+
+<form method="post" action="/Reception/AddDoctorToDepartment">
+    <select name="DepartmentID">
+        @foreach (var n in ViewBag.Departments)
+        {
+            <option value="@n.ID">@n.Name</option>
+        }
+    </select>
+    <br />
+    <br />
+    <select name="DoctorID">
+        @foreach (var n in ViewBag.Doctors)
+        {
+            <option value="@n.ID">@n.LastName @n.FirstName @n.MiddleName</option>
+        }
+    </select>
+    <br />
+    <br />
+    <input type="submit" value="Прикрепить" />
+</form>
+
+<h3>Добавить график работы врача</h3>
+
+<form method="post" action="/Reception/AddTimetable">
+    <select name="FormDoctorID">
+        @foreach (var n in ViewBag.Doctors)
+        {
+            <option value="@n.ID">@n.LastName @n.FirstName @n.MiddleName</option>
+        }
+    </select>
+    <br />
+    <br />
+    <input type="date" value="@ViewBag.Today" name="FormDate" min="@ViewBag.Today" max="2018-12-31" />
+    <br />
+    <br />
+    @foreach (var n in ViewBag.Timetable)
+    {
+        <p><input type="checkbox" value="@n" name="FormTimetable" />@n</p>
+    }
+    <input type="submit" value="Добавить" />
+</form>
+
+<h3>Завести карточку гражданина</h3>
+<form method="post" action="/Reception/AddCard">
+    <input type="text" name="FormLastName" placeholder="Фамилия" />
+    <br />
+    <br />
+    <input type="text" name="FormFirstName" placeholder="Имя" />
+    <br />
+    <br />
+    <input type="text" name="FormMiddleName" placeholder="Отчество" />
+    <br />
+    <br />
+    <input type="date" name="FormBirthDay" />
+    <br />
+    <br/>
+    <input type="submit" value="Завести карточку"/>
+</form>
+
+<h1>Добавить болезни</h1>
+<form method="post" action="/Reception/ShowCard">
+
+    <select name="FormCardID">
+
+        @foreach (var n in ViewBag.Cards)
+        {
+            <option value="@n.CardID">@n.LastName @n.FirstName @n.MiddleName</option>
+        }
+    </select>
+    <br />
+    <br />
+    <input type="submit" value="Показать карточку" />
+
+</form>
